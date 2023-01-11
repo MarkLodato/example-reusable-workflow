@@ -6,6 +6,7 @@ on:
       resuableInput:
         description: 'Example field for reusable workflow'
         required: false
+        type: string
 
 jobs:
   dump-contexts:
@@ -13,11 +14,11 @@ jobs:
     steps:
       - name: Dump contexts as JSON
         run: |
+          # The 'jobs' context is not available here.
           echo '{
             "github": ${{toJSON(github)}},
             "vars": ${{toJSON(vars)}},
             "job": ${{toJSON(job)}},
-            "jobs": ${{toJSON(jobs)}},
             "steps": ${{toJSON(steps)}},
             "runner": ${{toJSON(runner)}},
             "secrets": ${{toJSON(secrets)}},
