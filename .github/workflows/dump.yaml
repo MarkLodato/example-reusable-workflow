@@ -4,7 +4,11 @@ on:
   workflow_call:
     inputs:
       resuableInput:
-        description: 'Example field for reusable workflow'
+        description: 'Field for reusable workflow'
+        required: false
+        type: string
+      shadowedInput:
+        description: 'Field with same name as top-level workflow'
         required: false
         type: string
 
