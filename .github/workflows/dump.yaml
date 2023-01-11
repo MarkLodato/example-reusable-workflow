@@ -1,0 +1,28 @@
+name: Dump reusable workflow contexts
+
+on:
+  workflow_call:
+    inputs:
+      resuableInput:
+        description: 'Example field for reusable workflow'
+        required: false
+
+jobs:
+  dump-contexts:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump contexts as JSON
+        run: |
+          echo '{
+            "github": ${{toJSON(github)}},
+            "vars": ${{toJSON(vars)}},
+            "job": ${{toJSON(job)}},
+            "jobs": ${{toJSON(jobs)}},
+            "steps": ${{toJSON(steps)}},
+            "runner": ${{toJSON(runner)}},
+            "secrets": ${{toJSON(secrets)}},
+            "strategy": ${{toJSON(strategy)}},
+            "matrix": ${{toJSON(matrix)}},
+            "needs": ${{toJSON(needs)}},
+            "inputs": ${{toJSON(inputs)}}
+          }' | jq --sort-keys .
