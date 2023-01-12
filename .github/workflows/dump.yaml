@@ -18,8 +18,10 @@ jobs:
     steps:
       - name: Dump contexts as JSON
         run: |
-          # The 'jobs' context is not available here.
-          echo '{
+          # Note: reusable workflows also have a "jobs" context, but it is not
+          # available here.
+          cat <<'EOF' | jq --sort-keys .
+          {
             "github": ${{toJSON(github)}},
             "vars": ${{toJSON(vars)}},
             "job": ${{toJSON(job)}},
@@ -30,4 +32,5 @@ jobs:
             "matrix": ${{toJSON(matrix)}},
             "needs": ${{toJSON(needs)}},
             "inputs": ${{toJSON(inputs)}}
-          }' | jq --sort-keys .
+          }
+          EOF
